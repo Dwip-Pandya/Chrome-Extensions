@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "Wallpaper Dashboard",
+    "version": "1.0",
+    "description": "Wallpaper Dashboard is a sleek and functional Chrome extension that transforms your new tab into a dynamic wallpaper dashboard with weather, clock, customizable bookmarks, and sticky notes — all designed for a smooth and polished user experience.",
+    "permissions": [
+        "bookmarks",
+        "storage",
+        "geolocation"
+    ],
+    "host_permissions": [
+        "https://api.unsplash.com/*",
+        "https://api.openweathermap.org/*"
+    ],
+    "chrome_url_overrides": {
+        "newtab": "newtab.html"
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    }
+}

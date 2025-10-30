@@ -1,0 +1,379 @@
+/* Import SF Pro Display font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for theming */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: rgba(255, 255, 255, 0.9);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --blur: blur(20px);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.night-mode {
+    --glass-bg: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Calendar Button - Circular */
+.calendar-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    z-index: 100;
+    color: var(--text-primary);
+    animation: slideInFromLeft 0.8s ease-out 0.6s both;
+    padding: 0;
+}
+
+.calendar-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.calendar-button svg {
+    transition: var(--transition);
+}
+
+.calendar-button:hover svg {
+    transform: scale(1.1);
+}
+
+.calendar-button:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Calendar Widget Styles */
+#calendar-widget {
+    position: fixed;
+    bottom: 100px;
+    left: 30px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    width: 320px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#calendar-widget.calendar-hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+}
+
+#calendar-widget:not(.calendar-hidden):hover {
+    transform: translateY(-2px) scale(1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Calendar Header */
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--glass-border);
+    gap: 8px;
+}
+
+#calendar-month-year {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    flex: 1;
+    user-select: none;
+}
+
+.calendar-nav-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.calendar-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.calendar-nav-btn:active {
+    transform: scale(0.95);
+}
+
+.calendar-close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.calendar-close-btn:hover {
+    background: rgba(255, 59, 48, 0.8);
+    color: white;
+    transform: scale(1.05);
+}
+
+.calendar-close-btn:active {
+    transform: scale(0.95);
+}
+
+/* Calendar Weekdays */
+#calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 8px 0;
+    user-select: none;
+}
+
+/* Calendar Days Grid */
+#calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    background: transparent;
+    border: 1px solid transparent;
+    user-select: none;
+}
+
+.calendar-day:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.calendar-day.other-month {
+    color: var(--text-secondary);
+    opacity: 0.4;
+}
+
+.calendar-day.today {
+    background: rgba(0, 122, 255, 0.3);
+    border-color: rgba(0, 122, 255, 0.8);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.calendar-day.today:hover {
+    background: rgba(0, 122, 255, 0.4);
+    border-color: rgba(0, 122, 255, 1);
+}
+
+.calendar-day.selected {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+}
+
+/* Responsive Design for Calendar */
+@media (max-width: 768px) {
+    .calendar-button {
+        top: 195px;
+        left: 15px;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .calendar-button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    #calendar-widget {
+        bottom: 20px;
+        left: 20px;
+        width: 280px;
+        padding: 15px;
+    }
+
+    #calendar-month-year {
+        font-size: 14px;
+    }
+
+    .calendar-nav-btn,
+    .calendar-close-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .calendar-nav-btn {
+        font-size: 18px;
+    }
+
+    .calendar-close-btn {
+        font-size: 22px;
+    }
+
+    .calendar-weekday {
+        font-size: 11px;
+        padding: 6px 0;
+    }
+
+    .calendar-day {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-button {
+        top: 185px;
+        left: 12px;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .calendar-button svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    #calendar-widget {
+        bottom: 15px;
+        left: 15px;
+        width: 260px;
+        padding: 12px;
+    }
+
+    #calendar-header {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+    }
+
+    #calendar-month-year {
+        font-size: 13px;
+    }
+
+    .calendar-nav-btn,
+    .calendar-close-btn {
+        width: 26px;
+        height: 26px;
+    }
+
+    .calendar-nav-btn {
+        font-size: 16px;
+    }
+
+    .calendar-close-btn {
+        font-size: 20px;
+    }
+
+    .calendar-weekday {
+        font-size: 10px;
+        padding: 5px 0;
+    }
+
+    .calendar-day {
+        font-size: 11px;
+        border-radius: 6px;
+    }
+
+    #calendar-days {
+        gap: 3px;
+    }
+
+    #calendar-weekdays {
+        gap: 3px;
+    }
+}
+
+/* Focus states for accessibility */
+.calendar-button:focus,
+.calendar-nav-btn:focus,
+.calendar-close-btn:focus,
+.calendar-day:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .calendar-button,
+    #calendar-widget {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .calendar-day:hover,
+    .calendar-nav-btn:hover,
+    .calendar-close-btn:hover {
+        transform: none;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .calendar-button,
+    #calendar-widget {
+        display: none !important;
+    }
+}

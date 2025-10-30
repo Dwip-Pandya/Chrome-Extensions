@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="stylesheet" href="Style/styles.css">
+    <link rel="stylesheet" href="Style/shortcut.css">
+    <link rel="stylesheet" href="Style/calendar.css">
+
+</head>
+
+<body>
+    <!-- Background Image -->
+    <div id="background-container">
+        <img id="background-image" src="" alt="Background wallpaper">
+        <div id="background-overlay"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Top Right Info Widget -->
+    <div id="info-widget">
+        <div id="weather-info">
+            <span id="weather-icon">☀️</span>
+            <span id="weather-temp">--°C</span>
+            <span id="weather-desc">Loading...</span>
+        </div>
+        <div id="time-info">
+            <span id="current-time">--:--:-- --</span>
+        </div>
+        <div id="date-info">
+            <span id="current-date">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div id="search-container">
+        <select id="search-engine" class="background">
+            <option value="https://www.google.com/search?q=" selected class="search-option">Google</option>
+            <option value="https://www.bing.com/search?q=" class="search-option">Bing</option>
+            <option value="https://duckduckgo.com/?q=" class="search-option">DuckDuckGo</option>
+            <option value="https://www.youtube.com/results?search_query=" class="search-option">YouTube</option>
+        </select>
+        <input type="text" id="search-input" placeholder="Search the web..." />
+    </div>
+
+    <!-- Shortcuts Sidebar -->
+    <div id="shortcuts-sidebar">
+        <div id="shortcuts-header">
+            <span>Shortcuts</span>
+            <button id="add-shortcut-btn" class="shortcut-add-btn">+</button>
+        </div>
+        <div id="shortcuts-list"></div>
+    </div>
+
+    <!-- Add Shortcut Modal -->
+    <div id="shortcut-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Shortcut</h2>
+                <span class="close-btn shortcut-close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="shortcut-form">
+                    <input type="text" id="shortcut-name" placeholder="Shortcut name" autocomplete="off">
+                    <input type="url" id="shortcut-url" placeholder="https://example.com" autocomplete="off">
+                    <button id="save-shortcut-btn" class="action-btn primary">Save Shortcut</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookmark Bar at Bottom -->
+    <div id="bookmark-bar">
+        <div id="add-bookmark-btn" class="bookmark-item">
+            <span class="plus-icon">+</span>
+        </div>
+        <div id="bookmark-items"></div>
+    </div>
+
+    <!-- Bookmark Modal -->
+    <div id="bookmark-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Bookmarks</h2>
+                <div class="modal-actions">
+                    <button id="select-all-btn" class="action-btn">Select All</button>
+                    <button id="add-selected-btn" class="action-btn primary" disabled>Add Selected (0)</button>
+                    <span class="close-btn">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="search-container">
+                    <input type="text" id="bookmark-search" placeholder="Search bookmarks..." autocomplete="off">
+                </div>
+                <div id="bookmark-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Button -->
+    <div id="download-btn" class="download-button" title="Download Current Wallpaper">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+    </div>
+
+    <!-- Add Note Button -->
+    <button class="add-note-button" id="add-note-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+                d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h.01M15 10h.01M21 12c0 4.418-10 8-10 8s-10-3.582-10-8a10 10 0 1 1 20 0z" />
+        </svg>
+        Add Note
+    </button>
+
+    <!-- Theme Selection Button -->
+    <button class="theme-selection-button" id="theme-selection-btn" title="Choose Theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+                d="M12 1v6m0 6v6m11-7h-6m-6 0H1m15.5-6.5l-4.24 4.24M7.76 16.24l-4.24 4.24m12.02 0l-4.24-4.24M7.76 7.76L3.52 3.52" />
+        </svg>
+        Themes
+    </button>
+
+    <!-- Theme Selection Modal -->
+    <div id="theme-modal" class="modal theme-modal">
+        <div class="modal-content theme-modal-content">
+            <div class="modal-header">
+                <h2>Choose Your Theme</h2>
+                <div class="modal-actions">
+                    <button id="clear-theme-btn" class="action-btn">Clear Theme</button>
+                    <button id="save-theme-btn" class="action-btn primary" disabled>Save Theme</button>
+                    <span class="close-btn theme-close-btn">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body theme-modal-body">
+                <div class="theme-grid">
+                    <div class="theme-card" data-theme="nature,landscape">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #4CAF50, #8BC34A);">
+                            <span class="theme-icon">🌿</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Forest/Jungle</h3>
+                            <p>Lush green landscapes</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-forest">
+                    </div>
+
+                    <div class="theme-card" data-theme="mountains,peaks">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #607D8B, #90A4AE);">
+                            <span class="theme-icon">🏔️</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Mountains</h3>
+                            <p>Majestic peaks and ranges</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-mountains">
+                    </div>
+
+                    <div class="theme-card" data-theme="night,dark,nighttime">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #1A237E, #3949AB);">
+                            <span class="theme-icon">🌙</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Night</h3>
+                            <p>Dark and mysterious scenes</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-night">
+                    </div>
+
+                    <div class="theme-card" data-theme="sky,clouds">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #2196F3, #81D4FA);">
+                            <span class="theme-icon">☁️</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Sky</h3>
+                            <p>Beautiful cloud formations</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-sky">
+                    </div>
+
+                    <div class="theme-card" data-theme="moon,lunar">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #37474F, #78909C);">
+                            <span class="theme-icon">🌕</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Moon</h3>
+                            <p>Lunar landscapes and phases</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-moon">
+                    </div>
+
+                    <div class="theme-card" data-theme="ocean,beach,sea">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #00BCD4, #4DD0E1);">
+                            <span class="theme-icon">🌊</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Ocean/Beach</h3>
+                            <p>Coastal and marine views</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-ocean">
+                    </div>
+
+                    <div class="theme-card" data-theme="desert,sand">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #FF9800, #FFC107);">
+                            <span class="theme-icon">🏜️</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Desert</h3>
+                            <p>Sandy dunes and arid lands</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-desert">
+                    </div>
+
+                    <div class="theme-card" data-theme="city,urban,architecture">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #455A64, #90A4AE);">
+                            <span class="theme-icon">🏙️</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Cityscape</h3>
+                            <p>Urban architecture and life</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-city">
+                    </div>
+
+                    <div class="theme-card" data-theme="countryside,rural,farm">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #8BC34A, #CDDC39);">
+                            <span class="theme-icon">🌾</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Countryside</h3>
+                            <p>Rural and pastoral scenes</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-countryside">
+                    </div>
+
+                    <div class="theme-card" data-theme="waterfall,cascade">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #00ACC1, #26C6DA);">
+                            <span class="theme-icon">💧</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Waterfalls</h3>
+                            <p>Cascading water features</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-waterfall">
+                    </div>
+
+                    <div class="theme-card" data-theme="flowers,botanical">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #E91E63, #F48FB1);">
+                            <span class="theme-icon">🌸</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Flowers</h3>
+                            <p>Beautiful floral displays</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-flowers">
+                    </div>
+
+                    <div class="theme-card" data-theme="winter,snow,cold">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #B0BEC5, #ECEFF1);">
+                            <span class="theme-icon">❄️</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Winter/Snow</h3>
+                            <p>Snowy and icy landscapes</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-winter">
+                    </div>
+
+                    <div class="theme-card" data-theme="sunset,sunrise,golden">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #FF5722, #FF9800);">
+                            <span class="theme-icon">🌅</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Sunset/Sunrise</h3>
+                            <p>Golden hour moments</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-sunset">
+                    </div>
+
+                    <div class="theme-card" data-theme="space,stars,galaxy">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #1A237E, #7B1FA2);">
+                            <span class="theme-icon">⭐</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Space/Stars</h3>
+                            <p>Cosmic and stellar views</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-space">
+                    </div>
+
+                    <div class="theme-card" data-theme="animals,wildlife">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #795548, #A1887F);">
+                            <span class="theme-icon">🦌</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Animal/Wild</h3>
+                            <p>Wildlife and nature</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-animals">
+                    </div>
+
+                    <div class="theme-card" data-theme="random">
+                        <div class="theme-preview" style="background: linear-gradient(135deg, #9C27B0, #E1BEE7);">
+                            <span class="theme-icon">🎲</span>
+                        </div>
+                        <div class="theme-info">
+                            <h3>Random</h3>
+                            <p>Mix of all themes</p>
+                        </div>
+                        <input type="checkbox" class="theme-checkbox" id="theme-random">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu for removing bookmarks -->
+    <div id="context-menu" class="context-menu">
+        <div class="context-item" id="remove-bookmark">Remove</div>
+    </div>
+
+    <!-- Notes Container -->
+    <div class="notes-container" id="notes-container"></div>
+
+    <!-- Calendar Button -->
+    <button class="calendar-button" id="calendar-btn" title="Calendar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+    </button>
+
+    <!-- Calendar Widget -->
+    <div id="calendar-widget" class="calendar-hidden">
+        <div id="calendar-header">
+            <button id="calendar-prev-btn" class="calendar-nav-btn">‹</button>
+            <div id="calendar-month-year"></div>
+            <button id="calendar-next-btn" class="calendar-nav-btn">›</button>
+            <button id="calendar-close-btn" class="calendar-close-btn" title="Close Calendar">×</button>
+        </div>
+        <div id="calendar-weekdays">
+            <div class="calendar-weekday">Sun</div>
+            <div class="calendar-weekday">Mon</div>
+            <div class="calendar-weekday">Tue</div>
+            <div class="calendar-weekday">Wed</div>
+            <div class="calendar-weekday">Thu</div>
+            <div class="calendar-weekday">Fri</div>
+            <div class="calendar-weekday">Sat</div>
+        </div>
+        <div id="calendar-days"></div>
+    </div>
+
+    <script src="Script/newtab.js"></script>
+    <script src="Script/note.js"></script>
+    <script src="Script/shortcuts.js"></script>
+    <script src="Script/calendar.js"></script>
+</body>
+
+</html>
