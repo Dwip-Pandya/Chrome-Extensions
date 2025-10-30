@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
+    <title>StickyNote Plus</title>
+</head>
+
+<body class="light">
+    <div class="container">
+        <div class="sidebar">
+            <!-- <div id="liveClock" title="Current time" class="live-clock"></div> -->
+            <button id="listModeBtn" title="Toggle list mode (Ctrl+L)">📋 List</button>
+            <button id="copyBtn" title="Copy full note (Ctrl+C if nothing selected)">📋 Copy</button>
+            <button id="exportBtn" title="Export notes to file (Ctrl+E)">📤 Export</button>
+            <button id="clearTab">🧹 Clear</button>
+            <div id="tabs-container"></div>
+
+            <div class="theme-section">
+                <label>🎨 Theme:</label>
+                <select id="themeSelect">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="custom">Custom</option>
+                    <option value="random">Random</option>
+                </select>
+            </div>
+
+            <div id="customThemeControls" style="display:none;">
+                <label>Style:</label>
+                <select id="customStyleSelect">
+                    <option value="solid">Solid</option>
+                    <option value="gradient">Gradient</option>
+                </select>
+                <input type="color" id="color1" value="#1a1a2e" />
+                <input type="color" id="color2" value="#16213e" style="display:none;" />
+            </div>
+        </div>
+
+        <div class="main">
+            <div id="fakerControls" class="faker-controls">
+            <button data-type="name" title="Generate random name">Name</button>
+            <button data-type="email" title="Generate email based on name">Email</button>
+            <button data-type="phone" title="Generate random phone number">Phone</button>
+            <button data-type="address" title="Generate random international address">Address</button>
+            <button data-type="pan" title="Generate fake PAN (random)">PAN</button>
+            <button data-type="password" title="Generate random password">Password</button>
+            </div>
+            <div class="formatting-toolbar">
+                <button id="boldBtn" title="Bold (Ctrl+B)" data-format="bold">
+                    <strong>B</strong>
+                </button>
+                <button id="italicBtn" title="Italic (Ctrl+I)" data-format="italic">
+                    <em>I</em>
+                </button>
+                <button id="underlineBtn" title="Underline (Ctrl+U)" data-format="underline">
+                    <u>U</u>
+                </button>
+                <button id="headingBtn" title="Heading (Ctrl+H)" data-format="heading">
+                    H
+                </button>
+            </div>
+            <textarea id="noteInput" placeholder="Write your note here..."></textarea>
+            <div id="statusBar">Auto-save enabled</div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
