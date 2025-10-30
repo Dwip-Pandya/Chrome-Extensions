@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>QR Code Generator</h1>
+        </div>
+
+        <!-- URL Input Section -->
+        <div class="input-section">
+            <input type="url" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" autocomplete="url">
+            <div class="button-row">
+                <button id="generateBtn" class="primary-btn">Generate QR</button>
+                <button id="currentTabBtn" class="secondary-btn">Current Tab</button>
+            </div>
+        </div>
+
+        <!-- QR Code Display Section -->
+        <div class="qr-section" id="qrSection" style="display: none;">
+            <div class="qr-container">
+                <div id="qrcode"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="downloadBtn" class="action-btn">
+                    <span class="btn-icon">📥</span>
+                    Download PNG
+                </button>
+                <button id="copyBtn" class="action-btn">
+                    <span class="btn-icon">📋</span>
+                    Copy Image
+                </button>
+                <button id="copyUrlBtn" class="action-btn">
+                    <span class="btn-icon">🔗</span>
+                    Copy URL
+                </button>
+                <button id="shareBtn" class="action-btn">
+                    <span class="btn-icon">🔗</span>
+                    Share QR
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent QR Codes Section -->
+        <div class="recent-section">
+            <div class="section-header">
+                <h3>Recent QR Codes</h3>
+                <button id="clearHistoryBtn" class="clear-btn">Clear All</button>
+            </div>
+            <div id="recentQRs" class="recent-list">
+                <p class="empty-state">No recent QR codes</p>
+            </div>
+        </div>
+
+        <!-- Status Message -->
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="qrcode.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
