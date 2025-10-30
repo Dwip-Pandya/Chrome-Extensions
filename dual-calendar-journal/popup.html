@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Calendar Journal</title>
+    <link rel="stylesheet" href="style/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header with toggle and theme selector -->
+        <div class="header">
+            <div class="calendar-toggle">
+                <button id="workCalendarBtn" class="toggle-btn active">📊 Work</button>
+                <button id="personalCalendarBtn" class="toggle-btn">📖 Personal</button>
+            </div>
+            <div class="header-actions">
+                <button id="logsBtn" class="action-btn" title="View Logs">📋</button>
+                <button id="themeBtn" class="action-btn" title="Change Theme">🎨</button>
+                <button id="settingsBtn" class="action-btn" title="Settings">⚙️</button>
+            </div>
+        </div>
+
+        <!-- Calendar Navigation -->
+        <div class="calendar-nav">
+            <button id="prevMonth" class="nav-btn">‹</button>
+            <h2 id="monthYear"></h2>
+            <button id="nextMonth" class="nav-btn">›</button>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="calendar-grid">
+            <div class="weekdays">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+            </div>
+            <div id="calendarDays" class="calendar-days"></div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat">
+                <span class="stat-label">This Month:</span>
+                <span id="monthStats">0 entries</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entry Modal -->
+    <div id="entryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Entry</h3>
+                <button id="closeModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="entryTitle" placeholder="Title (optional)" />
+
+                <textarea id="entrySummary" placeholder="Write your entry here..." rows="6"></textarea>
+
+                <!-- Mood Selector (Personal Calendar Only) -->
+                <div id="moodSelector" class="mood-section" style="display: none;">
+                    <label>Mood:</label>
+                    <div class="mood-options">
+                        <button type="button" class="mood-btn" data-mood="😊">😊</button>
+                        <button type="button" class="mood-btn" data-mood="😐">😐</button>
+                        <button type="button" class="mood-btn" data-mood="😢">😢</button>
+                        <button type="button" class="mood-btn" data-mood="😠">😠</button>
+                        <button type="button" class="mood-btn" data-mood="😴">😴</button>
+                        <button type="button" class="mood-btn" data-mood="🎉">🎉</button>
+                    </div>
+                </div>
+
+                <!-- Tags Section -->
+                <div class="tags-section">
+                    <label>Tags:</label>
+                    <div class="tag-input-container">
+                        <input type="text" id="tagInput" placeholder="Add tags..." />
+                        <button type="button" id="addTagBtn">+</button>
+                    </div>
+                    <div id="suggestedTags" class="suggested-tags"></div>
+                    <div id="selectedTags" class="selected-tags"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteEntry" class="delete-btn" style="display: none;">Delete</button>
+                <div class="modal-actions">
+                    <button id="cancelEntry" class="cancel-btn">Cancel</button>
+                    <button id="saveEntry" class="save-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Modal (Personal Calendar) -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Enter Password</h3>
+            </div>
+            <div class="modal-body">
+                <input type="password" id="passwordInput" placeholder="Enter password" />
+                <div class="password-actions">
+                    <button id="setPasswordBtn" class="link-btn">Set New Password</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelPassword" class="cancel-btn">Cancel</button>
+                <button id="unlockCalendar" class="save-btn">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logs Modal -->
+    <div id="logsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Activity Logs</h3>
+                <button id="closeLogsModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="logs-controls">
+                    <div class="log-filters">
+                        <select id="logCalendarFilter">
+                            <option value="all">All Calendars</option>
+                            <option value="work">Work Only</option>
+                            <option value="personal">Personal Only</option>
+                        </select>
+                        <select id="logActionFilter">
+                            <option value="all">All Actions</option>
+                            <option value="create">Created</option>
+                            <option value="edit">Edited</option>
+                            <option value="delete">Deleted</option>
+                        </select>
+                        <input type="date" id="logDateFilter" />
+                        <button id="exportLogsBtn" class="action-btn">📤 Export</button>
+                    </div>
+                    <div class="log-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Actions:</span>
+                            <span id="totalActions">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Today:</span>
+                            <span id="todayActions">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="logsContainer" class="logs-container">
+                    <!-- Logs will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Modal -->
+    <div id="themeModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3>Choose Theme</h3>
+                <button id="closeThemeModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="theme-options">
+                    <button class="theme-option" data-theme="light">☀️ Light</button>
+                    <button class="theme-option" data-theme="dark">🌙 Dark</button>
+                    <button class="theme-option" data-theme="blue">💙 Ocean</button>
+                    <button class="theme-option" data-theme="green">💚 Nature</button>
+                    <button class="theme-option" data-theme="purple">💜 Violet</button>
+                    <button class="theme-option" data-theme="random">🎲 Random</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/popup.js"></script>
+</body>
+
+</html>

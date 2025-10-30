@@ -1,0 +1,843 @@
+/* Base Variables */
+:root {
+    /* Light Theme (Default) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent-work: #007bff;
+    --accent-personal: #e91e63;
+    --accent-current: var(--accent-work);
+    --border: #dee2e6;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --hover: rgba(0, 123, 255, 0.1);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #404040;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border: #404040;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Ocean Theme */
+[data-theme="blue"] {
+    --bg-primary: #f0f8ff;
+    --bg-secondary: #e6f3ff;
+    --bg-tertiary: #b3d9ff;
+    --accent-work: #0066cc;
+    --accent-personal: #0080ff;
+    --border: #99ccff;
+}
+
+/* Nature Theme */
+[data-theme="green"] {
+    --bg-primary: #f0fff0;
+    --bg-secondary: #e6ffe6;
+    --bg-tertiary: #b3ffb3;
+    --accent-work: #006600;
+    --accent-personal: #009900;
+    --border: #99ff99;
+}
+
+/* Violet Theme */
+[data-theme="purple"] {
+    --bg-primary: #f8f0ff;
+    --bg-secondary: #f0e6ff;
+    --bg-tertiary: #e0ccff;
+    --accent-work: #6600cc;
+    --accent-personal: #8000ff;
+    --border: #cc99ff;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    width: 380px;
+    height: 500px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.calendar-toggle {
+    display: flex;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.toggle-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+    background: var(--accent-current);
+    color: white;
+    box-shadow: 0 2px 4px var(--shadow);
+}
+
+.toggle-btn:not(.active):hover {
+    background: var(--hover);
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: var(--hover);
+    transform: scale(1.05);
+}
+
+/* Calendar Navigation */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: var(--accent-current);
+    color: white;
+}
+
+#monthYear {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.weekday {
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    flex: 1;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.calendar-day:hover {
+    background: var(--hover);
+    transform: scale(1.05);
+}
+
+.calendar-day.other-month {
+    opacity: 0.3;
+    color: var(--text-secondary);
+}
+
+.calendar-day.today {
+    background: var(--accent-current);
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day.has-entry::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-current);
+    border-radius: 50%;
+}
+
+.calendar-day.today.has-entry::after {
+    background: white;
+}
+
+/* Quick Stats */
+.quick-stats {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+}
+
+#monthStats {
+    color: var(--accent-current);
+    font-weight: 600;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--shadow);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-content.large {
+    max-width: 600px;
+    max-height: 80vh;
+}
+
+.modal-content.small {
+    max-width: 300px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.close-btn {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+}
+
+.close-btn:hover {
+    background: var(--bg-secondary);
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.modal-body input,
+.modal-body textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 14px;
+    margin-bottom: 16px;
+    resize: none;
+    transition: border-color 0.2s ease;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus {
+    outline: none;
+    border-color: var(--accent-current);
+}
+
+/* Mood Selector */
+.mood-section {
+    margin-bottom: 16px;
+}
+
+.mood-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.mood-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.mood-btn {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--border);
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.mood-btn:hover,
+.mood-btn.active {
+    border-color: var(--accent-current);
+    background: var(--accent-current);
+    transform: scale(1.1);
+}
+
+/* Tags Section */
+.tags-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.tag-input-container {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+#tagInput {
+    flex: 1;
+    margin-bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#addTagBtn {
+    width: 40px;
+    border: 1px solid var(--border);
+    border-left: none;
+    background: var(--accent-current);
+    color: white;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.suggested-tags {
+    margin-bottom: 12px;
+}
+
+.suggested-tags .tag,
+.selected-tags .tag {
+    display: inline-block;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    margin: 2px;
+    border-radius: 12px;
+    font-size: 11px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.suggested-tags .tag:hover {
+    background: var(--accent-current);
+    color: white;
+}
+
+.selected-tags .tag {
+    background: var(--accent-current);
+    color: white;
+    position: relative;
+    padding-right: 20px;
+}
+
+.selected-tags .tag::after {
+    content: '×';
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-secondary);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.save-btn,
+.cancel-btn,
+.delete-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.save-btn {
+    background: var(--accent-current);
+    color: white;
+}
+
+.save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.cancel-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.cancel-btn:hover {
+    background: var(--hover);
+}
+
+.delete-btn {
+    background: var(--danger);
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* Password Modal Specific */
+.password-actions {
+    margin-top: 12px;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--accent-current);
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+/* Theme Modal */
+.theme-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.theme-option {
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.theme-option:hover {
+    background: var(--hover);
+    transform: translateY(-1px);
+}
+
+.theme-option.active {
+    background: var(--accent-current);
+    color: white;
+    border-color: var(--accent-current);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Personal Calendar Mode */
+.personal-mode {
+    --accent-current: var(--accent-personal);
+}
+
+.personal-mode .toggle-btn.active {
+    background: var(--accent-personal);
+}
+
+.personal-mode .calendar-day.today {
+    background: var(--accent-personal);
+}
+
+.personal-mode .calendar-day.has-entry::after {
+    background: var(--accent-personal);
+}
+
+.personal-mode #monthStats {
+    color: var(--accent-personal);
+}
+
+.personal-mode .save-btn {
+    background: var(--accent-personal);
+}
+
+.personal-mode .nav-btn:hover {
+    background: var(--accent-personal);
+}
+
+.personal-mode .mood-btn:hover,
+.personal-mode .mood-btn.active {
+    border-color: var(--accent-personal);
+    background: var(--accent-personal);
+}
+
+.personal-mode #addTagBtn {
+    background: var(--accent-personal);
+}
+
+.personal-mode .suggested-tags .tag:hover {
+    background: var(--accent-personal);
+}
+
+.personal-mode .selected-tags .tag {
+    background: var(--accent-personal);
+}
+
+/* Logs Modal Styles */
+.logs-controls {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.log-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.log-filters select,
+.log-filters input {
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 12px;
+}
+
+.log-stats {
+    display: flex;
+    gap: 16px;
+}
+
+.stat-item {
+    font-size: 12px;
+}
+
+.stat-item .stat-label {
+    color: var(--text-secondary);
+    margin-right: 4px;
+}
+
+.logs-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.log-entry {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-current);
+}
+
+.log-entry.work {
+    border-left-color: var(--accent-work);
+}
+
+.log-entry.personal {
+    border-left-color: var(--accent-personal);
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.log-action {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: var(--bg-tertiary);
+}
+
+.log-action.create {
+    background: var(--success);
+    color: white;
+}
+
+.log-action.edit {
+    background: var(--warning);
+    color: #333;
+}
+
+.log-action.delete {
+    background: var(--danger);
+    color: white;
+}
+
+.log-timestamp {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.log-details {
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+.log-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.log-summary {
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.log-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.log-tag {
+    font-size: 10px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: 2px 6px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.log-mood {
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.log-changes {
+    margin-top: 8px;
+    padding: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.log-changes .change-field {
+    font-weight: 600;
+    color: var(--accent-current);
+}
+
+.empty-logs {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 380px) {
+    .container {
+        padding: 12px;
+    }
+
+    .calendar-day {
+        font-size: 11px;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+}

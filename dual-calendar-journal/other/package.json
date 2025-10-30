@@ -1,0 +1,33 @@
+{
+    "name": "dual-calendar-journal",
+    "version": "1.0.0",
+    "description": "A Chrome extension for dual-mode daily journaling with work and personal calendars",
+    "main": "popup.js",
+    "scripts": {
+        "build": "echo 'No build process required for this extension'",
+        "test": "echo 'Tests not yet implemented'",
+        "lint": "echo 'Linting not yet configured'",
+        "package": "zip -r dual-calendar-journal.zip . -x '*.git*' 'node_modules/*' '*.DS_Store' 'package*.json'"
+    },
+    "keywords": [
+        "chrome-extension",
+        "journal",
+        "calendar",
+        "productivity",
+        "diary",
+        "mood-tracking",
+        "personal-development"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/dual-calendar-journal"
+    },
+    "bugs": {
+        "url": "https://github.com/yourusername/dual-calendar-journal/issues"
+    },
+    "homepage": "https://github.com/yourusername/dual-calendar-journal#readme",
+    "devDependencies": {},
+    "dependencies": {}
+}
