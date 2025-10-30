@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Screenshot + Notes</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="nav-item active" data-section="home">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21,15 16,10 5,21" />
+                </svg>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" data-section="screenshots">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <path d="m9 9 5 12 1.5-2.8L22 15" />
+                </svg>
+                <span>Screenshots</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <h2>Capture Screenshot</h2>
+                <div class="capture-area">
+                    <button id="captureBtn" class="btn primary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <polyline points="21,15 16,10 5,21" />
+                        </svg>
+                        Capture Current Tab
+                    </button>
+                    <div id="captureMessage" class="message"></div>
+                </div>
+
+                <div class="note-area">
+                    <label for="noteInput">Add a note:</label>
+                    <textarea id="noteInput" placeholder="Add context or description for this screenshot..."></textarea>
+                    <button id="saveNoteBtn" class="btn secondary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17,21 17,13 7,13 7,21" />
+                            <polyline points="7,3 7,8 15,8" />
+                        </svg>
+                        Save Screenshot & Note
+                    </button>
+                    <div id="saveMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Screenshots Section -->
+            <section id="screenshots" class="section">
+                <div class="screenshots-header">
+                    <h2>Screenshots</h2>
+                    <div class="filter-controls">
+                        <input type="date" id="dateFilter" class="date-filter">
+                        <button id="clearFilter" class="btn tertiary">Clear</button>
+                    </div>
+                </div>
+
+                <div id="screenshotsList" class="screenshots-list">
+                    <!-- Screenshots will be loaded here -->
+                </div>
+
+                <div id="noScreenshots" class="no-screenshots">
+                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21,15 16,10 5,21" />
+                    </svg>
+                    <p>No screenshots saved yet</p>
+                    <p class="sub-text">Capture your first screenshot from the Home tab</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
