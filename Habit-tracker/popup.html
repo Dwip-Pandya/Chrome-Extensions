@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Discipline Habit Tracker</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header class="app-header">
+        <h1>Discipline Habit Tracker</h1>
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="today">Today</button>
+            <button class="tab-btn" data-tab="timeline">Timeline</button>
+            <button class="tab-btn" data-tab="reports">Reports</button>
+            <button class="tab-btn" data-tab="habits">Habits</button>
+        </nav>
+    </header>
+
+    <main class="tab-container">
+        <!-- TODAY TAB -->
+        <section id="tab-today" class="tab-panel active">
+            <div class="section-head">
+                <div>
+                    <h2 id="today-date-label">Today</h2>
+                    <p class="muted" id="today-subtitle"></p>
+                </div>
+                <div class="meter">
+                    <div class="meter-label">Discipline (today)</div>
+                    <div class="meter-bar" title="100% if all habits done">
+                        <div class="meter-fill" id="today-meter" style="width:0%"></div>
+                    </div>
+                    <div class="meter-percent" id="today-meter-text">0%</div>
+                </div>
+            </div>
+
+            <div id="today-body">
+                <div id="today-empty-habits" class="empty hidden">
+                    <p>No habits yet. Create your first habit in the <strong>Habits</strong> tab.</p>
+                </div>
+                <ul id="today-habit-list" class="habit-list"></ul>
+            </div>
+        </section>
+
+        <!-- TIMELINE TAB -->
+        <section id="tab-timeline" class="tab-panel">
+            <div class="section-head">
+                <h2>Scrollable Dates</h2>
+                <p class="muted">Scroll down to move forward in time. Each day shows completion summary. Expand to edit.
+                </p>
+            </div>
+
+            <div id="timeline" class="timeline"></div>
+            <div id="timeline-spinner" class="spinner hidden">Loading more days…</div>
+        </section>
+
+        <!-- REPORTS TAB -->
+        <section id="tab-reports" class="tab-panel">
+            <div class="reports-nav">
+                <button class="subtab-btn active" data-subtab="daily">Daily</button>
+                <button class="subtab-btn" data-subtab="weekly">Weekly</button>
+                <button class="subtab-btn" data-subtab="monthly">Monthly</button>
+                <button class="subtab-btn" data-subtab="yearly">Yearly</button>
+            </div>
+
+            <!-- Daily Report -->
+            <div id="report-daily" class="report-panel active">
+                <div class="selectors">
+                    <label>Day
+                        <select id="daily-day"></select>
+                    </label>
+                    <label>Month
+                        <select id="daily-month"></select>
+                    </label>
+                    <label>Year
+                        <select id="daily-year"></select>
+                    </label>
+                    <button id="daily-load" class="btn">Load</button>
+                </div>
+                <div id="daily-summary" class="card"></div>
+                <ul id="daily-details" class="habit-list"></ul>
+            </div>
+
+            <!-- Weekly Report -->
+            <div id="report-weekly" class="report-panel">
+                <div class="selectors">
+                    <button id="weekly-prev" class="btn">&larr; Prev Week</button>
+                    <div class="range" id="weekly-range"></div>
+                    <button id="weekly-next" class="btn">Next Week &rarr;</button>
+                </div>
+                <div id="weekly-summary" class="card"></div>
+                <div id="weekly-bars" class="bars"></div>
+            </div>
+
+            <!-- Monthly Report -->
+            <div id="report-monthly" class="report-panel">
+                <div class="selectors">
+                    <label>Month
+                        <select id="monthly-month"></select>
+                    </label>
+                    <label>Year
+                        <select id="monthly-year"></select>
+                    </label>
+                    <button id="monthly-load" class="btn">Load</button>
+                </div>
+                <div class="meter large">
+                    <div class="meter-label">Discipline (month)</div>
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="monthly-meter" style="width:0%"></div>
+                    </div>
+                    <div class="meter-percent" id="monthly-meter-text">0%</div>
+                </div>
+                <div id="monthly-summary" class="card"></div>
+                <ul id="monthly-days" class="day-list"></ul>
+                <div id="monthly-reasons" class="card"></div>
+            </div>
+
+            <!-- Yearly Report -->
+            <div id="report-yearly" class="report-panel">
+                <div class="selectors">
+                    <label>Year
+                        <select id="yearly-year"></select>
+                    </label>
+                    <button id="yearly-load" class="btn">Load</button>
+                </div>
+                <div id="yearly-summary" class="card"></div>
+                <div id="yearly-grid" class="grid-12"></div>
+            </div>
+        </section>
+
+        <!-- HABITS TAB -->
+        <section id="tab-habits" class="tab-panel">
+            <div class="section-head">
+                <h2>Habits</h2>
+                <p class="muted">Start empty. Create your habits; they show up every day.</p>
+            </div>
+
+            <div class="create-row">
+                <input id="habit-input" type="text" placeholder="e.g., Wake up at 6 AM" />
+                <button id="habit-add" class="btn">Add Habit</button>
+            </div>
+
+            <ul id="habit-list" class="habit-mgr-list"></ul>
+        </section>
+    </main>
+
+    <template id="habit-item-template">
+        <li class="habit-item">
+            <div class="habit-name"></div>
+            <div class="habit-actions">
+                <button class="btn-xs edit">Edit</button>
+                <button class="btn-xs delete danger">Delete</button>
+            </div>
+        </li>
+    </template>
+
+    <template id="today-row-template">
+        <li class="today-row">
+            <div class="row-head">
+                <div class="row-title"></div>
+                <div class="row-controls">
+                    <label class="chip">
+                        <input type="radio" class="status-done" name="">
+                        <span>Done</span>
+                    </label>
+                    <label class="chip">
+                        <input type="radio" class="status-failed" name="">
+                        <span>Failed</span>
+                    </label>
+                    <button class="btn-xs clear">Clear</button>
+                </div>
+            </div>
+            <div class="reason-row hidden">
+                <textarea class="reason" rows="2" placeholder="Reason for not completing"></textarea>
+            </div>
+        </li>
+    </template>
+
+    <template id="timeline-day-template">
+        <div class="day-card">
+            <div class="day-head">
+                <div>
+                    <div class="day-title"></div>
+                    <div class="day-subtitle muted"></div>
+                </div>
+                <div class="pill" title="100% if all habits done">
+                    <span class="pill-value">0%</span>
+                </div>
+            </div>
+            <div class="day-summary"></div>
+            <details class="day-details">
+                <summary>Edit / View details</summary>
+                <ul class="day-habits"></ul>
+            </details>
+        </div>
+    </template>
+
+    <script src="popup.js" type="module"></script>
+</body>
+
+</html>
